@@ -33,12 +33,12 @@ const splats = new LumaSplatsThree({
 });
 scene.add(splats);
 
-const axesHelper = new THREE.AxesHelper( 10 );
-axesHelper.position.y = 0.1;
-scene.add( axesHelper );
+// const axesHelper = new THREE.AxesHelper( 10 );
+// axesHelper.position.y = 0.1;
+// scene.add( axesHelper );
 
 // caminfo
-const camInfo = document.getElementById('cam-info');
+// const camInfo = document.getElementById('cam-info');
 
 const areaButtons = [
   {
