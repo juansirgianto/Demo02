@@ -23,6 +23,15 @@ const { pins, pinPOIs } = createPins(scene);
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
+
+const maxY = 2.0;
+const minY = 0.3;
+
+controls.addEventListener('change', () => {
+  // Clamp camera Y position
+  camera.position.y = Math.min(maxY, Math.max(minY, camera.position.y));
+});
+
 controls.minDistance = 0.9; 
 controls.maxDistance = 1.8;  
 
@@ -219,9 +228,9 @@ function animate() {
     renderer.render(scene, camera);
     camInfo.textContent = `Camera: x=${camera.position.x.toFixed(2)}, y=${camera.position.y.toFixed(2)}, z=${camera.position.z.toFixed(2)}`;
 
-    const maxY = 2.0;
-    const minY = 0.3;
-    camera.position.y = Math.min(maxY, Math.max(minY, camera.position.y));
+    // const maxY = 2.0;
+    // const minY = 0.3;
+    // camera.position.y = Math.min(maxY, Math.max(minY, camera.position.y));
 }
 
 animate();
