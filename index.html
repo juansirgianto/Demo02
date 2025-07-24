@@ -32,14 +32,19 @@
     <img src="./photos/CC_white.png" alt="">
 </div>
 
-    <div class="absolute flex flex-col gap-2 right-2 top-2 bg-[#757741] p-3 rounded-xl">
-        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 1</button>
-        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 2</button>
-        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 3</button>
-        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 4</button>
-        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 5</button>
-        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 6</button>
-    </div>
+
+<div class="absolute flex flex-col gap-2 right-2 top-2 bg-[#757741] p-3 rounded-xl">
+    <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 1</button>
+    <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 2</button>
+    <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 3</button>
+    <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 4</button>
+    <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 5</button>
+    <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 6</button>
+</div>
+
+<button id="openVideo" class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-[#757741] text-[#f5f4ea] rounded-lg font-semibold p-3 z-50">
+  Watch Video
+</button>
 
     <!-- Kontainer deskripsi -->
 <div id="pooldescription" class="description-box absolute top-20 left-2 bg-[#757741] rounded-lg p-4 shadow-lg w-96 z-20" style="display: none;">
@@ -212,6 +217,16 @@
         </div> -->
       </div>
     </div>
+
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-40 hidden">
+  <div class="relative w-[90%] max-w-3xl">
+    <button id="closeVideo" class="absolute top-2 right-2 text-white text-2xl font-bold z-10">&times;</button>
+    <video id="videoPlayer" controls autoplay class="w-full h-[60vh] rounded-lg">
+      <source src="./photos/video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
 
     <!-- <div id="cam-info" class="absolute bottom-2 right-2 bg-black text-white text-xs px-2 py-1 rounded z-10"></div> -->
   

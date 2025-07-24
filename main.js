@@ -186,6 +186,31 @@ canvas.addEventListener('mousemove', (event) => {
   }
 });
 
+const videoBtn = document.getElementById('openVideo');
+  const videoModal = document.getElementById('videoModal');
+  const closeVideo = document.getElementById('closeVideo');
+  const videoPlayer = document.getElementById('videoPlayer');
+
+  videoBtn.addEventListener('click', () => {
+    videoModal.classList.remove('hidden');
+    videoPlayer.currentTime = 0;
+    videoPlayer.play();
+  });
+
+  closeVideo.addEventListener('click', () => {
+    videoModal.classList.add('hidden');
+    videoPlayer.pause();
+    videoPlayer.currentTime = 0;
+  });
+
+  // Tutup modal jika klik di luar video
+  videoModal.addEventListener('click', (e) => {
+    if (e.target === videoModal) {
+      videoModal.classList.add('hidden');
+      videoPlayer.pause();
+      videoPlayer.currentTime = 0;
+    }
+  });
 
 // Animate
 function animate() {
