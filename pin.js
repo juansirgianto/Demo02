@@ -8,7 +8,7 @@ export function createPins(scene) {
   pinGroup.userData = { name, status, price };
 
   loader.load(svgURL, texture => {
-    const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
+    const material = new THREE.SpriteMaterial({ map: texture, transparent: true, alphaTest: 0.1 });
     const sprite = new THREE.Sprite(material);
     sprite.scale.set(0.1, 0.1, 1);
     sprite.center.set(0.5, 0); // Ujung bawah pin menyentuh lantai
@@ -23,7 +23,7 @@ export function createPins(scene) {
 }
 
 const pin1 = createPin(
-  new THREE.Vector3(0.18, 0.08, 0.15),
+  new THREE.Vector3(0.05, 0, 0.05),
   'assets/pin1.svg',
   'Unit A',
   'Sold',
@@ -31,14 +31,22 @@ const pin1 = createPin(
 );
 
 const pin2 = createPin(
-  new THREE.Vector3(-0.18, 0.1, 0.36),
+  new THREE.Vector3(0.3, 0.1, -0.41),
   'assets/pin2.svg',
   'Unit B',
   'Available',
   '985,000 $'
 );
 
-  const pins = [pin1, pin2];
+const pin3 = createPin(
+  new THREE.Vector3(0.6, 0, 0.1),
+  'assets/pin3.svg',
+  'Unit B',
+  'Available',
+  '985,000 $'
+);
+
+  const pins = [pin1, pin2, pin3];
 
   const pinPOIs = [
     {
@@ -58,8 +66,16 @@ const pin2 = createPin(
       mesh: pin2,
       position: pin2.position,
       descriptionId: 'housedescription',
-      camera_position: new THREE.Vector3(-0.07, 0.68, 1.24),
+      camera_position: new THREE.Vector3(-0.3, 0.75, -0.15),
       camera_target: pin2.position,
+    },
+    {
+      id: 'pin3',
+      mesh: pin3,
+      position: pin3.position,
+      descriptionId: 'gardendescription',
+      camera_position: new THREE.Vector3(0.65, 0.67, 0.68),
+      camera_target: pin3.position,
     },
   ];
 

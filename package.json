@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@photo-sphere-viewer/core": "^5.13.4",
     "tailwindcss": "^4.1.11",
     "three": "^0.178.0"
   },

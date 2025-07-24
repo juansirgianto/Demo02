@@ -42,25 +42,38 @@ const camInfo = document.getElementById('cam-info');
 
 const area1Btn = document.querySelector('button:nth-child(1)');
 const area2Btn = document.querySelector('button:nth-child(2)');
+const area3Btn = document.querySelector('button:nth-child(3)');
 const descPool = document.getElementById('pooldescription');
 const descHouse = document.getElementById('housedescription');
+const descGarden = document.getElementById('gardendescription');
 const closeBtn = document.getElementById('close-description');
 
 area1Btn.addEventListener('click', () => {
   moveCameraTo([-0.52, 0.73, -0.15], [0.2, 0, 0.2]); // Atur posisi & target
   descPool.style.display = 'block';
   descHouse.style.display = 'none';
+  descGarden.style.display = 'none';
 });
 
 area2Btn.addEventListener('click', () => {
-  moveCameraTo([-0.3, 0.75, -0.15], [0.3, 0, -0.41]);
+  moveCameraTo([-0.3, 0.75, -0.15], [0.3, 0.1, -0.41]);
   descHouse.style.display = 'block';
   descPool.style.display = 'none';
+  descGarden.style.display = 'none';
 });
 
-closeBtn.addEventListener('click', () => {
-  document.querySelectorAll('[id$="description"]').forEach(el => {
-    el.style.display = 'none';
+area3Btn.addEventListener('click', () => {
+  moveCameraTo([0.65, 0.67, 0.68], [0.6, 0, 0.1]);
+  descGarden.style.display = 'block';
+  descPool.style.display = 'none';
+  descHouse.style.display = 'none';
+});
+
+document.querySelectorAll('.close-description').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[id$="description"]').forEach(el => {
+      el.style.display = 'none';
+    });
   });
 });
 
@@ -113,11 +126,44 @@ canvas.addEventListener('click', (event) => {
       if (desc) desc.style.display = 'block';
 
       // Highlight sementara
-      clickedSprite.material.color.set(0x00ff00);
+      clickedSprite.material.color.set(0xffff00);
       setTimeout(() => clickedSprite.material.color.set(0xffffff), 300);
     }
   }
 });
+
+let hoveredSprite = null;
+
+canvas.addEventListener('mousemove', (event) => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(
+    pins.map(p => p.children[0]).filter(c => c instanceof THREE.Sprite)
+  );
+
+  if (intersects.length > 0) {
+    const sprite = intersects[0].object;
+
+    // Jika sprite yang dihover sekarang berbeda dari sebelumnya
+    if (hoveredSprite !== sprite) {
+      // Reset warna sprite sebelumnya
+      if (hoveredSprite) hoveredSprite.material.color.set(0xffffff);
+
+      // Set warna hover (misalnya kuning)
+      sprite.material.color.set(0xffff00);
+      hoveredSprite = sprite;
+    }
+    canvas.style.cursor = 'pointer';
+  } else {
+    // Tidak ada yang dihover
+    if (hoveredSprite) hoveredSprite.material.color.set(0xffffff);
+    hoveredSprite = null;
+  }
+});
+
 
 // Animate
 function animate() {
