@@ -1,25 +1,40 @@
-export function initCarousel(images) {
-  let index = 0;
-  let isClosingByClickOutside = false;
+let index = 0;
+let currentImages = [];
 
-  // DOM Elements
+export function initCarousel() {
   const carouselImage = document.getElementById("carouselImage");
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
-  const thumbnails = document.querySelectorAll(".thumbnail");
   const scrollContainer = document.getElementById("thumbnailScroll");
   const thumbLeft = document.getElementById("thumbLeft");
   const thumbRight = document.getElementById("thumbRight");
-  const galleryBtn = document.getElementById("galleryBtn");
   const carouselWrapper = document.getElementById("carouselWrapper");
   const carousel = document.getElementById("carouselContainer");
   const thumbnail = document.getElementById("thumbnailScroll");
 
   function updateCarousel() {
-    carouselImage.src = images[index];
+    if (!currentImages.length) return;
+    carouselImage.src = currentImages[index];
+
+    const thumbnails = document.querySelectorAll(".thumbnail");
     thumbnails.forEach((thumb, idx) => {
       thumb.classList.toggle("border-blue-500", idx === index);
       thumb.classList.toggle("border-transparent", idx !== index);
+    });
+  }
+
+  function renderThumbnails() {
+    thumbnail.innerHTML = "";
+    currentImages.forEach((imgSrc, idx) => {
+      const thumb = document.createElement("img");
+      thumb.src = imgSrc;
+      thumb.dataset.index = idx;
+      thumb.className = "thumbnail w-30 h-24 object-cover cursor-pointer border-2 border-transparent rounded";
+      thumb.addEventListener("click", () => {
+        index = idx;
+        updateCarousel();
+      });
+      thumbnail.appendChild(thumb);
     });
   }
 
@@ -29,35 +44,15 @@ export function initCarousel(images) {
     else if (element.msRequestFullscreen) element.msRequestFullscreen();
   }
 
-  // Event: Tampilkan carousel
-  galleryBtn.addEventListener("click", () => {
-    carouselWrapper.classList.remove("hidden");
-    carousel.classList.remove("hidden");
-    thumbnail.classList.remove("hidden");
-    updateCarousel();
-
-    if (window.innerWidth <= 964) {
-      document.getElementById("homedescription")?.classList.add("hidden");
-    }
-  });
-
-  // Event: Navigasi slide
+  // Navigasi kiri-kanan
   prevBtn.addEventListener("click", () => {
-    index = (index - 1 + images.length) % images.length;
+    index = (index - 1 + currentImages.length) % currentImages.length;
     updateCarousel();
   });
 
   nextBtn.addEventListener("click", () => {
-    index = (index + 1) % images.length;
+    index = (index + 1) % currentImages.length;
     updateCarousel();
-  });
-
-  // Event: Klik thumbnail
-  thumbnails.forEach((thumb) => {
-    thumb.addEventListener("click", () => {
-      index = parseInt(thumb.dataset.index);
-      updateCarousel();
-    });
   });
 
   // Scroll thumbnail kiri/kanan
@@ -69,24 +64,44 @@ export function initCarousel(images) {
     scrollContainer.scrollBy({ left: 150, behavior: "smooth" });
   });
 
-  // Event: Klik luar → tutup
+  // Klik luar → tutup
   carouselWrapper.addEventListener("click", (e) => {
     if (e.target === carouselWrapper) {
-      isClosingByClickOutside = true;
       carouselWrapper.classList.add("hidden");
 
-      if (window.innerWidth <= 964 && isClosingByClickOutside) {
-        document.getElementById("homedescription")?.classList.remove("hidden");
+      // Tampilkan deskripsi kembali jika mobile
+      if (window.innerWidth <= 964) {
+        document.querySelectorAll(".description-box").forEach(box => {
+          box.classList.remove("hidden");
+        });
       }
-
-      isClosingByClickOutside = false;
     }
   });
 
-  // Fullscreen on image click
+  // Fullscreen jika klik gambar
   carouselImage.addEventListener("click", () => {
     openFullscreen(carouselImage);
   });
 
-  updateCarousel(); // Load awal
+  // Global handler tombol Gallery
+  document.querySelectorAll(".galleryBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const images = JSON.parse(btn.dataset.images || "[]");
+      if (images.length > 0) {
+        index = 0;
+        currentImages = images;
+        renderThumbnails();
+        updateCarousel();
+        carouselWrapper.classList.remove("hidden");
+        carousel.classList.remove("hidden");
+        thumbnail.classList.remove("hidden");
+
+        if (window.innerWidth <= 964) {
+          document.querySelectorAll(".description-box").forEach(box => {
+            box.classList.add("hidden");
+          });
+        }
+      }
+    });
+  });
 }

@@ -4,17 +4,7 @@ import { LumaSplatsThree, LumaSplatsSemantics } from './libs/luma-web.module.js'
 import { initCarousel } from './carousel.js';
 import { createPins } from './pin.js';
 
-const galleryImages = [
-  "./photos/ENTRANCE.jpg",
-  "./photos/BED.jpg",
-  "./photos/STUDYROOM.jpg",
-  "./photos/ENSUITE.jpg",
-  "./photos/KITCHEN.jpg",
-  "./photos/LOUNGE.jpg",
-  "./photos/PATIO_BACKYARD.jpg"
-];
-
-initCarousel(galleryImages);
+initCarousel();
 
 // Init scene
 const scene = new THREE.Scene();

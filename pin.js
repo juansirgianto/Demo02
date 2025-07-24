@@ -48,6 +48,10 @@ const pin2 = createPin(
         descriptionId: 'pooldescription', // sesuai ID HTML
         camera_position: new THREE.Vector3(-0.52, 0.73, -0.15),
         camera_target: pin1.position,
+        images: [
+      "./photos/pool.png",
+      "./photos/house1.jpg",
+    ]
     },
     {
       id: 'pin2',
