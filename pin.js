@@ -46,7 +46,7 @@ const pin2 = createPin(
         mesh: pin1,
         position: pin1.position,
         descriptionId: 'pooldescription', // sesuai ID HTML
-        camera_position: new THREE.Vector3(0.66, 0.68, 1.01),
+        camera_position: new THREE.Vector3(-0.52, 0.73, -0.15),
         camera_target: pin1.position,
     },
     {
