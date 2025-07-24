@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Luma Splats Three.js</title>
+  <style>
+    body { margin: 0; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+    
+        #thumbnailScroll::-webkit-scrollbar {
+            display: none;
+        }
+        #thumbnailScroll {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+    </style>
+<body>
+    <canvas id="webgl-canvas" class="absolute block top-0 lef-0 z-0"></canvas>
+
+<div class="absolute top-[5px] left-[10px] w-[200px]">
+    <img src="./photos/CC_white.png" alt="">
+</div>
+
+    <div class="absolute flex flex-col gap-2 right-2 top-2 bg-[#757741] p-3 rounded-xl">
+        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 1</button>
+        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 2</button>
+        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 3</button>
+        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 4</button>
+        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 5</button>
+        <button class="bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] px-3 py-1 font-semibold rounded-lg">Area 6</button>
+    </div>
+
+    <!-- Kontainer deskripsi -->
+<div id="pooldescription" class="absolute top-20 left-2 bg-[#757741] rounded-lg p-4 shadow-lg w-96 z-20" style="display: none;">
+  <button class="absolute top-2 right-2 text-[#f5f4ea]" id="close-description">
+    <i data-lucide="x"></i>
+  </button>
+  <img src="./photos/pool.png" alt="" class="rounded-lg w-full h-[200px] object-cover my-4">
+  <h4 class="text-lg font-bold text-[#f5f4ea]">Pool Courtyard</h4>
+  <p class="text-sm mb-3 text-[#f5f4ea]">Ini adalah area utama rumah atau ruangan utama. Lorem ipsum dolor sit amet...</p>
+    <button id="galleryBtn" class="flex gap-2 text-center justify-center font-medium items-center bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] w-full p-2 rounded-xl" data-gallery-id="home">
+      <i data-lucide="image" class="size-5 my-auto "></i>
+      <span class="font-semibold">Gallery</span>
+    </button>
+</div>
+<div id="housedescription" class="absolute top-20 left-2 bg-[#757741] rounded-lg p-4 shadow-lg w-96 z-20" style="display: none;">
+  <button class="absolute top-2 right-2 text-[#f5f4ea]" id="close-description">
+    <i data-lucide="x"></i>
+  </button>
+  <img src="./photos/pool.png" alt="" class="rounded-lg w-full h-[200px] object-cover my-4">
+  <h4 class="text-lg font-bold text-[#f5f4ea]">Main House</h4>
+  <p class="text-sm mb-3 text-[#f5f4ea]">Ini adalah area utama rumah atau ruangan utama. Lorem ipsum dolor sit amet...</p>
+    <button id="galleryBtn" class="flex gap-2 text-center justify-center font-medium items-center bg-[#d3d2a5] hover:bg-[#f5f4ea] text-[#757741] w-full p-2 rounded-xl" data-gallery-id="home">
+      <i data-lucide="image" class="size-5 my-auto "></i>
+      <span class="font-semibold">Gallery</span>
+    </button>
+</div>
+
+ <!-- Carousel Section -->
+    <div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden" id="carouselWrapper">
+      <div class="relative w-[1200px] max-w-[90%]" id="carouselWrap">
+        <!-- Carousel -->
+        <div class="relative flex items-center justify-center" id="carouselContainer">
+          <button id="prevBtn" class="relative left-2 bg-[#f5f4ea] hover:bg-[#2e3047] hover:text-[#f5f4ea] rounded-full p-2 z-10">
+            <i data-lucide="chevron-left"></i>
+          </button>
+
+          <img id="carouselImage" class="w-[800px] h-[600px] object-contain rounded-lg cursor-pointer" alt="Slide" />
+
+          <button id="nextBtn" class="relative right-2 bg-[#f5f4ea] hover:bg-[#2e3047] hover:text-[#f5f4ea] rounded-full p-2 z-10">
+            <i data-lucide="chevron-right"></i>
+          </button>
+        </div>
+        <div class="relative flex w-[600px] max-w-[90%] mx-auto mt-4 overflow-hidden">
+        <!-- Left Arrow -->
+        <button id="thumbLeft"
+          class="absolute left-0 top-1/2 -translate-y-1/2 bg-[#f5f4ea] hover:bg-[#2e3047] hover:text-[#f5f4ea] rounded-full p-1 shadow z-10">
+          <i data-lucide="chevron-left"></i>
+        </button>
+          <div id="thumbnailScroll" class="flex gap-2 overflow-x-auto scroll-smooth px-6 scrollbar-hide hidden">
+            <img src="./photos/ENTRANCE.jpg" class="thumbnail w-30 h-24 object-cover cursor-pointer border-2 border-transparent rounded" data-index="0" />
+            <img src="./photos/BED.jpg" class="thumbnail w-30 h-24 object-cover cursor-pointer border-2 border-transparent rounded" data-index="1" />
+            <img src="./photos/STUDYROOM.jpg" class="thumbnail w-30 h-24 object-cover cursor-pointer border-2 border-transparent rounded" data-index="2" />
+            <img src="./photos/ENSUITE.jpg" class="thumbnail w-30 h-24 object-cover cursor-pointer border-2 border-transparent rounded" data-index="3" />
+            <img src="./photos/KITCHEN.jpg" class="thumbnail w-30 h-24 object-cover cursor-pointer border-2 border-transparent rounded" data-index="4" />
+            <img src="./photos/LOUNGE.jpg" class="thumbnail w-30 h-24 object-cover cursor-pointer border-2 border-transparent rounded" data-index="5" />
+            <img src="./photos/PATIO_BACKYARD.jpg" class="thumbnail w-30 h-24 object-cover cursor-pointer border-2 border-transparent rounded" data-index="6" />
+          </div>
+        <button id="thumbRight"
+          class="absolute right-0 top-1/2 -translate-y-1/2 bg-[#f5f4ea] hover:bg-[#2e3047] hover:text-[#f5f4ea] rounded-full p-1 shadow z-10">
+          <i data-lucide="chevron-right"></i>
+        </button>
+        </div>
+        <!-- <div class="w-[600px] text-center text-white mx-auto">
+            <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem animi sed labore rerum, provident amet nulla aspernatur itaque quod vero.</h1>
+        </div> -->
+      </div>
+    </div>
+
+    <div id="cam-info" class="absolute bottom-2 right-2 bg-black text-white text-xs px-2 py-1 rounded z-10"></div>
+  
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
