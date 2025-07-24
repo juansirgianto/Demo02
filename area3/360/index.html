@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual Tour</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./vtour.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  #viewer {
+    width: 100vw;
+    height: 100vh;
+  }
+  </style>
+</head>
+<body>
+
+<!-- Viewer -->
+<div id="viewer"></div>
+
+<div id="navbar" style="position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%); z-index: 999;">
+  <button id="vrButton" style="padding: 10px 16px; font-size: 16px; border-radius: 8px; background: #2e3047; color: white; border: none; cursor: pointer;">
+    Enter VR Mode
+  </button>
+</div>
+
+<div class="absolute top-[5px] left-[10px] w-[200px] z-[99]">
+  <a href="/Demo01/">
+  <img src="../../photos/CC_white.png" alt="" >
+  </a>
+</div>
+
+<div class="absolute bg-[#2e3047] hover:bg-[#f5f4ea] text-[#f5f4ea] hover:text-[#2e3047] rounded-lg p-1.5 top-[5px] right-[10px] w-auto z-[99]">
+  <a href="/">
+  <i data-lucide="log-out" class="size-10 stroke-[2.5]"></i>
+  </a>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three/build/three.module.js",
+    "@photo-sphere-viewer/core": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.module.js",
+    "@photo-sphere-viewer/markers-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.module.js"
+  }
+}
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+<script type="module" src="./vtour.js"></script>
+
+</body>
+</html>

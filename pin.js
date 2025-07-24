@@ -46,7 +46,15 @@ const pin3 = createPin(
   '985,000 $'
 );
 
-  const pins = [pin1, pin2, pin3];
+const pin4 = createPin(
+  new THREE.Vector3(-0.3, 0, 0),
+  'assets/pin4.svg',
+  'Unit B',
+  'Available',
+  '985,000 $'
+);
+
+  const pins = [pin1, pin2, pin3, pin4];
 
   const pinPOIs = [
     {
@@ -56,10 +64,6 @@ const pin3 = createPin(
         descriptionId: 'pooldescription', // sesuai ID HTML
         camera_position: new THREE.Vector3(-0.52, 0.73, -0.15),
         camera_target: pin1.position,
-        images: [
-      "./photos/pool.png",
-      "./photos/house1.jpg",
-    ]
     },
     {
       id: 'pin2',
@@ -76,6 +80,14 @@ const pin3 = createPin(
       descriptionId: 'gardendescription',
       camera_position: new THREE.Vector3(0.65, 0.67, 0.68),
       camera_target: pin3.position,
+    },
+    {
+      id: 'pin4',
+      mesh: pin4,
+      position: pin4.position,
+      descriptionId: 'arrivaldescription',
+      camera_position: new THREE.Vector3(-0.45, 0.68, -0.70),
+      camera_target: pin4.position,
     },
   ];
 

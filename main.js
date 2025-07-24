@@ -40,34 +40,44 @@ scene.add( axesHelper );
 // caminfo
 const camInfo = document.getElementById('cam-info');
 
-const area1Btn = document.querySelector('button:nth-child(1)');
-const area2Btn = document.querySelector('button:nth-child(2)');
-const area3Btn = document.querySelector('button:nth-child(3)');
-const descPool = document.getElementById('pooldescription');
-const descHouse = document.getElementById('housedescription');
-const descGarden = document.getElementById('gardendescription');
-const closeBtn = document.getElementById('close-description');
+const areaButtons = [
+  {
+    button: document.querySelector('button:nth-child(1)'),
+    cameraPosition: [-0.52, 0.73, -0.15],
+    cameraTarget: [0.2, 0, 0.2],
+    descriptionId: 'pooldescription',
+  },
+  {
+    button: document.querySelector('button:nth-child(2)'),
+    cameraPosition: [-0.3, 0.75, -0.15],
+    cameraTarget: [0.3, 0.1, -0.41],
+    descriptionId: 'housedescription',
+  },
+  {
+    button: document.querySelector('button:nth-child(3)'),
+    cameraPosition: [0.65, 0.67, 0.68],
+    cameraTarget: [0.6, 0, 0.1],
+    descriptionId: 'gardendescription',
+  },
+  {
+    button: document.querySelector('button:nth-child(4)'),
+    cameraPosition: [-0.45, 0.68, -0.70],
+    cameraTarget: [-0.3, 0, 0],
+    descriptionId: 'arrivaldescription',
+  }
+];
 
-area1Btn.addEventListener('click', () => {
-  moveCameraTo([-0.52, 0.73, -0.15], [0.2, 0, 0.2]); // Atur posisi & target
-  descPool.style.display = 'block';
-  descHouse.style.display = 'none';
-  descGarden.style.display = 'none';
+areaButtons.forEach(({ button, cameraPosition, cameraTarget, descriptionId }) => {
+  button.addEventListener('click', () => {
+    moveCameraTo(cameraPosition, cameraTarget);
+
+    // Sembunyikan semua deskripsi, lalu tampilkan yang dipilih
+    document.querySelectorAll('.description-box').forEach(el => el.style.display = 'none');
+    const descEl = document.getElementById(descriptionId);
+    if (descEl) descEl.style.display = 'block';
+  });
 });
 
-area2Btn.addEventListener('click', () => {
-  moveCameraTo([-0.3, 0.75, -0.15], [0.3, 0.1, -0.41]);
-  descHouse.style.display = 'block';
-  descPool.style.display = 'none';
-  descGarden.style.display = 'none';
-});
-
-area3Btn.addEventListener('click', () => {
-  moveCameraTo([0.65, 0.67, 0.68], [0.6, 0, 0.1]);
-  descGarden.style.display = 'block';
-  descPool.style.display = 'none';
-  descHouse.style.display = 'none';
-});
 
 document.querySelectorAll('.close-description').forEach(btn => {
   btn.addEventListener('click', () => {

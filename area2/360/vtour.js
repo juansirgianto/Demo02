@@ -12,3 +12,7 @@ const viewer = new Viewer({
   // Zoom configuration
   defaultZoomLvl: 0,      // level zoom paling keluar (0 = paling kecil / paling jauh)
 });
+
+document.getElementById('vrButton').addEventListener('click', () => {
+  window.open('./vr.html', '_blank');
+});
