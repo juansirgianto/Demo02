@@ -23,8 +23,8 @@ const { pins, pinPOIs } = createPins(scene);
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-// controls.minDistance = 0.9; 
-// controls.maxDistance = 1.8;  
+controls.minDistance = 0.9; 
+controls.maxDistance = 1.8;  
 
 // Luma Splats
 const splats = new LumaSplatsThree({
@@ -64,7 +64,19 @@ const areaButtons = [
     cameraPosition: [-0.45, 0.68, -0.70],
     cameraTarget: [-0.3, 0, 0],
     descriptionId: 'arrivaldescription',
-  }
+  },
+  {
+    button: document.querySelector('button:nth-child(5)'),
+    cameraPosition: [-0.74, 0.68, -0.41],
+    cameraTarget: [-0.15, 0, -0.35],
+    descriptionId: 'archdescription',
+  },
+  {
+    button: document.querySelector('button:nth-child(6)'),
+    cameraPosition: [0.52, 0.63, -1.03],
+    cameraTarget: [0.5, 0, -0.6],
+    descriptionId: 'backdescription',
+  },
 ];
 
 areaButtons.forEach(({ button, cameraPosition, cameraTarget, descriptionId }) => {
@@ -182,9 +194,9 @@ function animate() {
     renderer.render(scene, camera);
     camInfo.textContent = `Camera: x=${camera.position.x.toFixed(2)}, y=${camera.position.y.toFixed(2)}, z=${camera.position.z.toFixed(2)}`;
 
-    camera.position.y = Math.min(maxY, Math.max(minY, camera.position.y));
     const maxY = 2.0;
-    const minY = 0.6;
+    const minY = 0.3;
+    camera.position.y = Math.min(maxY, Math.max(minY, camera.position.y));
 }
 
 animate();
