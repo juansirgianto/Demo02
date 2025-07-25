@@ -25,7 +25,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
 const maxY = 2.0;
-const minY = 0.3;
+const minY = 0.5;
 
 controls.addEventListener('change', () => {
   // Clamp camera Y position
