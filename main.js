@@ -108,7 +108,11 @@ document.querySelectorAll('.close-description').forEach(btn => {
   });
 });
 
+let isCameraAnimating = false;
+
 function moveCameraTo(position, lookAt = null, duration = 1000) {
+  if (isCameraAnimating) return; // hindari tumpukan animasi
+  isCameraAnimating = true;
   const start = camera.position.clone();
   const end = new THREE.Vector3(...position);
   const startTarget = controls.target.clone();
@@ -118,13 +122,14 @@ function moveCameraTo(position, lookAt = null, duration = 1000) {
 
   function animateCamera(time) {
     const elapsed = time - startTime;
-    const t = Math.min(elapsed / duration, 1); // normalisasi 0-1
-
+    const t = Math.min(elapsed / duration, 1);
     camera.position.lerpVectors(start, end, t);
-    controls.target.lerpVectors(startTarget, endTarget, t); // << ini penting!
+    controls.target.lerpVectors(startTarget, endTarget, t);
 
     if (t < 1) {
       requestAnimationFrame(animateCamera);
+    } else {
+      isCameraAnimating = false;
     }
   }
 
@@ -221,12 +226,16 @@ const videoBtn = document.getElementById('openVideo');
     }
   });
 
+  let isZooming = false;
+let isOrbiting = false;
+
 // Animate
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
-    camInfo.textContent = `Camera: x=${camera.position.x.toFixed(2)}, y=${camera.position.y.toFixed(2)}, z=${camera.position.z.toFixed(2)}`;
+    if (isZooming || isOrbiting) return; // Skip update scene jika sedang animasi khusus
+    // camInfo.textContent = `Camera: x=${camera.position.x.toFixed(2)}, y=${camera.position.y.toFixed(2)}, z=${camera.position.z.toFixed(2)}`;
 
     // const maxY = 2.0;
     // const minY = 0.3;
