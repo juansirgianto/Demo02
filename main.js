@@ -38,7 +38,7 @@ controls.maxDistance = 1.8;
 // Luma Splats
 const splats = new LumaSplatsThree({
     source: 'https://lumalabs.ai/capture/f55ef051-647c-49d0-9da8-8842667cb042',
-    particleRevealEnabled: true
+    particleRevealEnabled: false
 });
 scene.add(splats);
 
